@@ -56,6 +56,7 @@ function feed_controller()
                 // if public or belongs to user
                 if ($f['public'] || ($session['userid']>0 && $f['userid']==$session['userid'] && $session['read']))
                 {
+                	error_log("Action: ".$route->action );
                     if ($route->action == "value") $result = $feed->get_value($feedid);
                     if ($route->action == "timevalue") $result = $feed->get_timevalue_seconds($feedid);
                     if ($route->action == "get") $result = $feed->get_field($feedid,get('field')); // '/[^\w\s-]/'
@@ -65,6 +66,7 @@ function feed_controller()
                     if ($route->action == 'kwhatpower') $result = $feed->histogram_get_kwhd_atpower($feedid,get('min'),get('max'));
                     if ($route->action == 'kwhatpowers') $result = $feed->histogram_get_kwhd_atpowers($feedid,get('points'));
                     if ($route->action == 'data') $result = $feed->get_data($feedid,get('start'),get('end'),get('dp'));
+                    if ($route->action == 'dataminmaxavg') $result = $feed->get_data_min_max_avg($feedid,get('start'),get('end'),get('dp'));
                     if ($route->action == 'average') $result = $feed->get_average($feedid,get('start'),get('end'),get('interval'));
                 }
 

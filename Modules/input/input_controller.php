@@ -40,7 +40,7 @@ function input_controller()
         if ($route->action == 'api') $result = view("Modules/input/Views/input_api.php", array());
         if ($route->action == 'view') $result =  view("Modules/input/Views/input_view.php", array());
     }
-
+    
     if ($route->format == 'json')
     {
         /*
@@ -269,6 +269,13 @@ function input_controller()
                 $tmp = array();
                 foreach ($data as $name => $value)
                 {
+                	//TODO: anpassen auf nicht integer keys: bisher geht es nur mit integer!
+                	if(is_numeric($name)){
+                		$id = $nodeid*1000+$name;
+	                	$pushString = "http://monitor.senseme.at/charts/pushData?value=".$value."&id=".$id."&time=".$time;
+	                	http_get($pushString);
+                	}
+                	
                     if (!isset($dbinputs[$nodeid][$name])) {
                         $inputid = $input->create_input($userid, $nodeid, $name);
                         $dbinputs[$nodeid][$name] = true;

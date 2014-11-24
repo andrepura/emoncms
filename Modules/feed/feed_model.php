@@ -486,6 +486,28 @@ class Feed
         return $this->engine[$engine]->get_data($feedid,$start,$end,$outinterval);
 
     }
+    public function get_data_min_max_avg($feedid,$start,$end,$dp)
+    {
+    	
+    	$feedid = (int) $feedid;
+    	if ($end == 0) $end = time()*1000;
+    
+    	if (!$this->exist($feedid)) return array('success'=>false, 'message'=>'Feed does not exist');
+    
+    	$engine = $this->get_engine($feedid);
+    	if($engine!=Engine::PHPFIWA){
+    		return array('success'=>false, 'message'=>'Feed not supported for this engine '.$engine);
+    	}
+    	// Call to engine get_data method
+    	$range = ($end - $start) * 0.001;
+    	if ($dp>$this->max_npoints_returned) $dp = $this->max_npoints_returned;
+    	if ($dp<1) $dp = 1;
+    	$outinterval = round($range / $dp);
+    	return $this->engine[$engine]->get_data_min_max_avg($feedid,$start,$end,$outinterval);
+    
+    }    
+    
+    
 
     public function get_average($feedid,$start,$end,$outinterval)
     {

@@ -227,7 +227,7 @@ function input_controller() {
 					// TODO: anpassen auf nicht integer keys: bisher geht es nur mit integer!
 					if (is_numeric ( $name )) {
 						$id = $nodeid * 1000 + $name;
-						$pushString = "http://127.0.0.1:1337/charts/pushData?value=" . $value . "&id=" . $id . "&time=" . $time;
+						$pushString = "http://127.0.0.1:1337/charts/pushData?value=" . $value/10 . "&id=" . $id . "&time=" . $time;
 						error_log ( $pushString );
 						$domain = '127.0.0.1';
 						$prefix = 'http://';

@@ -61,12 +61,12 @@ function input_controller() {
 						$time_ref = time () - ( int ) $_GET ['sentat'];
 					} elseif (isset ( $_POST ['sentat'] )) {
 						$time_ref = time () - ( int ) $_POST ['sentat'];
-					}					// Offset mode: input/bulk.json?data=[[-10,16,1137],[-8,17,1437,3164],[-6,19,1412,3077]]&offset=-10
+					} 					// Offset mode: input/bulk.json?data=[[-10,16,1137],[-8,17,1437,3164],[-6,19,1412,3077]]&offset=-10
 					elseif (isset ( $_GET ['offset'] )) {
 						$time_ref = time () - ( int ) $_GET ['offset'];
 					} elseif (isset ( $_POST ['offset'] )) {
 						$time_ref = time () - ( int ) $_POST ['offset'];
-					}					// Time mode: input/bulk.json?data=[[-10,16,1137],[-8,17,1437,3164],[-6,19,1412,3077]]&time=1387729425
+					} 					// Time mode: input/bulk.json?data=[[-10,16,1137],[-8,17,1437,3164],[-6,19,1412,3077]]&time=1387729425
 					elseif (isset ( $_GET ['time'] )) {
 						$time_ref = ( int ) $_GET ['time'];
 					} elseif (isset ( $_POST ['time'] )) {
@@ -227,17 +227,17 @@ function input_controller() {
 					// TODO: anpassen auf nicht integer keys: bisher geht es nur mit integer!
 					if (is_numeric ( $name )) {
 						$id = $nodeid * 1000 + $name;
-						$pushString = "http://127.0.0.1:1337/charts/pushData?value=" . $value/10 . "&id=" . $id . "&time=" . $time;
+						$pushString = "http://monitor.senseme.at/charts/pushData?value=" . $value / 10 . "&id=" . $id . "&time=" . $time;
 						error_log ( $pushString );
-						$domain = '127.0.0.1';
+						$domain = 'track.pura.at';
 						$prefix = 'http://';
-						$relative = '/charts/pushData';
+						$relative = '/pushData';
 						
 						$url = "" . $prefix . $domain . $relative;
 						$qry_str = array (
-								'value' => $value,
+								'value' => $value / 10,
 								'id' => $id,
-								'time' => $time 
+								'time' => $time / 1000 
 						);
 						$url .= '?' . http_build_query ( $qry_str );
 						
